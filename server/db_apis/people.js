@@ -2,7 +2,9 @@ const oracledb = require('oracledb');
 const database = require('../services/database.js');
 
 const baseQuery =
-    `select * from people`;
+    `select * from people where 1 = 1`;
+
+const sortableColumns = ['id', 'last_name'];
 
 async function find(context) {
     let query = baseQuery;
@@ -11,8 +13,50 @@ async function find(context) {
     if (context.id) {
         binds.id = context.id;
 
-        query += `\nwhere id = :id`;
+        query += '\nand id = :id';
     }
+
+    if (context.diagnosis_id) {
+        binds.diagnosis_id = context.diagnosis_id;
+
+        query += '\nand diagnosis_id = :diagnosis_id';
+    }
+
+    if (context.ward_id) {
+        binds.ward_id = context.ward_id;
+
+        query += '\nand ward_id = :ward_id';
+    }
+
+    if (context.sort === undefined) {
+        query += '\norder by last_name asc';
+    } else {
+        let [column, order] = context.sort.split(':');
+
+        if (!sortableColumns.includes(column)) {
+            throw new Error('Invalid "sort" column');
+        }
+
+        if (order === undefined) {
+            order = 'asc';
+        }
+
+        if (order !== 'asc' && order !== 'desc') {
+            throw new Error('Invalid "sort" order');
+        }
+
+        query += `\norder by ${column} ${order}`;
+    }
+
+    if (context.skip) {
+        binds.row_offset = context.skip;
+
+        query += '\noffset :row_offset rows';
+    }
+
+    binds.row_limit = (context.limit > 0) ? context.limit : 30;
+
+    query += '\nfetch next :row_limit rows only';
 
     const result = await database.simpleExecute(query, binds);
 

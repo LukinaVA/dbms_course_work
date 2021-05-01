@@ -5,6 +5,13 @@ async function get(req, res, next) {
             const context = {};
 
             context.id = parseInt(req.params.id, 10);
+            context.skip = parseInt(req.query.skip, 10);
+            context.limit = parseInt(req.query.limit, 10);
+
+            context.sort = req.query.sort;
+
+            context.diagnosis_id = parseInt(req.query.diagnosis_id, 10);
+            context.ward_id = parseInt(req.query.ward_id, 10);
 
             const rows = await people.find(context);
 
