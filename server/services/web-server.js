@@ -2,7 +2,7 @@ const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
 const webServerConfig = require('../config/web-server.js');
-const database = require('./database.js');
+const router = require('./router.js');
 
 let httpServer;
 
@@ -12,13 +12,7 @@ function initialize() {
         httpServer = http.createServer(app);
 
         app.use(morgan('combined'));
-        app.get('/', async (req, res) => {
-            const result = await database.simpleExecute('select user, systimestamp from dual');
-            const user = result.rows[0].USER;
-            const date = result.rows[0].SYSTIMESTAMP;
-
-            res.end(`DB user: ${user}\nDate: ${date}`);
-        });
+        app.use('/api', router);
 
         httpServer.listen(webServerConfig.port)
             .on('listening', () => {
