@@ -1,6 +1,8 @@
 const http = require('http');
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
+
 const webServerConfig = require('../config/web-server.js');
 const router = require('./router.js');
 
@@ -11,11 +13,15 @@ function initialize() {
         const app = express();
         httpServer = http.createServer(app);
 
+        app.use(cors());
+        app.options('*', cors());
+
         app.use(morgan('combined'));
         app.use(express.json({
             reviver: reviveJson
         }));
         app.use('/api', router);
+
 
         httpServer.listen(webServerConfig.port)
             .on('listening', () => {
