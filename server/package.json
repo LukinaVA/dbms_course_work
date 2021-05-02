@@ -13,6 +13,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "oracledb": "^5.1.0"
   }
 }
