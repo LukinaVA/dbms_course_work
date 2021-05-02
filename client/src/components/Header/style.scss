@@ -1,0 +1,44 @@
+@import '../../vars';
+
+.header {
+  padding: 1.3rem 0;
+  font-size: 1.3rem;
+
+  margin-bottom: 1rem;
+
+  background-color: $lavender;
+  color: $white;
+}
+
+.header_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+
+  li {
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.header_link {
+  text-decoration: none;
+  color: inherit;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: $white;
+    transition: width .3s linear;
+  }
+
+  &:hover {
+    &:after {
+      width: 100%;
+    }
+  }
+}

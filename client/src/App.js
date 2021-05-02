@@ -5,6 +5,8 @@ import People from './components/People';
 import Wards from './components/Wards';
 import Diagnosis from './components/Diagnosis';
 
+import './style.scss';
+
 function App() {
   return (
     <div className="App">

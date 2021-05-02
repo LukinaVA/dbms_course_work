@@ -1,0 +1,35 @@
+.header {
+  padding: 1.3rem 0;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  background-color: #ad60d9;
+  color: #ebdff1;
+}
+
+.header_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}
+.header_list li:not(:last-child) {
+  margin-right: 2rem;
+}
+
+.header_link {
+  text-decoration: none;
+  color: inherit;
+}
+.header_link:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #ebdff1;
+  transition: width 0.3s linear;
+}
+.header_link:hover:after {
+  width: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */
