@@ -2,7 +2,10 @@ const oracledb = require('oracledb');
 const database = require('../services/database.js');
 
 const baseQuery =
-    `select * from diagnosis where 1 = 1`;
+    `select 
+    id "id",
+    name "name"
+    from diagnosis where 1 = 1`;
 
 const sortableColumns = ['id', 'name'];
 

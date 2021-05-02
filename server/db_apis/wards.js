@@ -1,7 +1,11 @@
 const oracledb = require('oracledb');
 const database = require('../services/database');
 
-const baseQuery = `select * from wards where 1 = 1`;
+const baseQuery = `select
+    id "id",
+    name "name",
+    max_count "max_count"
+    from wards where 1 = 1`;
 
 const sortableColumns = ['name', 'max_count'];
 
