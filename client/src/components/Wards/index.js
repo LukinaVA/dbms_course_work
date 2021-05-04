@@ -4,7 +4,9 @@ import axios from 'axios';
 const Wards = () => {
     const [wardList, setWardList] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalWithParams, setModalWithParams] = useState(false);
 
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [max_count, setMaxCount] = useState('');
 
@@ -20,7 +22,7 @@ const Wards = () => {
     const deleteWard = async (e) => {
         const id = e.target.parentElement.parentElement.firstChild.textContent;
         await axios.delete(`http://localhost:9095/api/wards/${id}`);
-        fetchData();
+        await fetchData();
     };
 
     const addNewWard = async () => {
@@ -28,7 +30,25 @@ const Wards = () => {
             name,
             max_count
         });
-        fetchData();
+        await fetchData();
+    };
+
+    const updateWardInfo = async () => {
+        await axios.put(`http://localhost:9095/api/wards/${id}`, {
+            name,
+            max_count
+        });
+        await fetchData();
+        setModalWithParams(false);
+        setModalIsOpen(false);
+    };
+
+    const openModalWithParams = async (ward) => {
+        setId(ward.id);
+        setName(ward.name);
+        setMaxCount(ward.max_count);
+        setModalWithParams(true);
+        setModalIsOpen(true);
     };
 
     return (
@@ -44,6 +64,9 @@ const Wards = () => {
                         <td>
                             <button onClick={deleteWard}>delete</button>
                         </td>
+                        <td>
+                            <button onClick={openModalWithParams.bind(null, ward)}>delete</button>
+                        </td>
                     </tr>
                 ))
                 }
@@ -53,10 +76,13 @@ const Wards = () => {
                 Add new ward
             </button>
             <div hidden={!modalIsOpen}>
-                <form onSubmit={addNewWard}>
+                <form>
                     <input value={name} onChange={(e) => setName(e.target.value)}/>
                     <input value={max_count} onChange={(e) => setMaxCount(e.target.value)}/>
-                    <button type='submit' onSubmit={addNewWard}>Add new ward</button>
+                    {!modalWithParams &&
+                    <button onClick={addNewWard}>Add new ward</button>}
+                    {modalWithParams &&
+                    <button onClick={updateWardInfo}>Update ward info</button>}
                 </form>
             </div>
         </section>
