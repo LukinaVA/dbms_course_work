@@ -50,11 +50,8 @@ async function post(req, res, next) {
 async function put(req, res, next) {
     try {
         let person = getPeopleFromRec(req);
-
         person.id = parseInt(req.params.id, 10);
-
         person = await people.update(person);
-
         if (person !== null) {
             res.status(200).json(person);
         } else {

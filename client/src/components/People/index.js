@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import WardsState from '../WardsState';
 import './style.scss';
 
 const People = () => {
@@ -89,6 +90,9 @@ const People = () => {
                     }
                 </tbody>
             </table>
+
+            <WardsState />
+
             <button onClick={() => setModalIsOpen(!modalIsOpen)}>
                 Add new patient
             </button>

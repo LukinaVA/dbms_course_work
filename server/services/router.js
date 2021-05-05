@@ -4,6 +4,7 @@ const router = new express.Router();
 const people = require('../controllers/people');
 const wards = require('../controllers/wards');
 const diagnosis = require('../controllers/diagnosis');
+const wardsState = require('../controllers/wardsState');
 
 router.route('/people/:id?')
     .get(people.get)
@@ -22,5 +23,8 @@ router.route('/diagnosis/:id?')
     .post(diagnosis.post)
     .put(diagnosis.put)
     .delete(diagnosis.del);
+
+router.route('/wards-state')
+    .get(wardsState.get);
 
 module.exports = router;
