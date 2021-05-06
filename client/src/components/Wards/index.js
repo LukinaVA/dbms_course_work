@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import WardOccupancyChart from '../WardOccupancyChart';
 
 const Wards = () => {
     const [wardList, setWardList] = useState([]);
@@ -72,6 +73,9 @@ const Wards = () => {
                 }
                 </tbody>
             </table>
+
+            <WardOccupancyChart/>
+
             <button onClick={() => setModalIsOpen(!modalIsOpen)}>
                 Add new ward
             </button>
